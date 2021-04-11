@@ -26,6 +26,8 @@ import {reminderSender} from './reminderSender';
     bot.command('lectures', lectureCommand);
     bot.hears(/Danke*/gi, thankyouResponder)
 
+    bot.on('text', zoomyResponder)
+
     await bot.launch();
 })();
 
