@@ -10,8 +10,8 @@ export default async ctx => {
         return ctx.reply('Please use /register [time] [day of week] [name] [zoom url]');
     }
 
-    let time = input[1].split(':');
-    let day = getDay(input[2]);
+    const time = input[1].split(':').map(parseInt);
+    const day = getDay(input[2]);
 
     if (day === -1) return ctx.reply('Kein gültiger Tag.');
 
