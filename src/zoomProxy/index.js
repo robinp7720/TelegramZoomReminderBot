@@ -12,7 +12,7 @@ zoomProxyServer.get('/:id', (req, res, next) => {
 
     // TODO: Move this to a separate file and implement a view rendering library
     res.sendRaw(200, `
-    <html>
+    <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta http-equiv="Refresh" content="0; url='${lectures[id].url}'" />
