@@ -1,48 +1,29 @@
 import {lectures} from '../lectureLoader';
 
-export function allRoute(req, res, next) { 
-
+export function allRoute(req, res, next) {
     // copy array so sorting can not mess up anything
-    let lecturesCopy = [...lectures];
+    const lecturesCopy = [...lectures];
+    const currentDate = new Date();
 
-    // order lectures from high to low
+    // First sort the lectures by date and time
     lecturesCopy.sort((a, b) => {
-        if (a.day > b.day || a.time[0] > b.time[0] || a.time[1] > b.time[1])
-            return -1;
-        else return 1;
+        const a_time = (a.day * 60 * 24) + (a.time[0] * 60 + a.time[1]);
+        const b_time = (b.day * 60 * 24) + (b.time[0] * 60 + b.time[1]);
+
+        return a_time - b_time;
     });
 
-    // get the current time
-    const date = new Date();
+    const beforeNow = lecturesCopy.filter((a) => {
+        const a_time = (a.day * 60 * 24) + (a.time[0] * 60 + a.time[1]);
+        const c_time = (currentDate.getDay() * 60 * 24) + (currentDate.getHours() * 60 + currentDate.getMinutes())
+        return a_time < c_time;
+    })
 
-    let day = date.getDay();
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
+    const afterNow = lecturesCopy.filter((a) => {
+        const a_time = (a.day * 60 * 24) + (a.time[0] * 60 + a.time[1]);
+        const c_time = (currentDate.getDay() * 60 * 24) + (currentDate.getHours() * 60 + currentDate.getMinutes())
+        return a_time > c_time;
+    })
 
-    // create time offset to show current event even 10 minutes after start time
-    minutes -= 10;
-
-    // manage overflow in minutes, hours and days
-    if (minutes > 0) {
-        minutes %= 60;
-        hours--;
-    }
-
-    if (hours > 0) {
-        hours %= 24;
-        day = (day - 1) % 7;
-    }
-
-    // order list to show next lecture at the top
-    for (let i = 0; i < lecturesCopy.length; i++) {
-        // find the first already passed lecture
-        if (lecturesCopy[i].date <= day && lecturesCopy[i].time[0] <= hours && lecturesCopy[i].time[1] <= minutes) {
-            // move future lectures to the end of the list
-            // first element is the next lecture
-            lecturesCopy.push(...lecturesCopy.splice(0, i - 2));
-            break;
-        }
-    }
-
-    res.json(200, lecturesCopy);
+    res.json(200, [...afterNow, ...beforeNow]);
 }
