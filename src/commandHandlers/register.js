@@ -12,14 +12,17 @@ export default async ctx => {
 
     const time = input[1].split(':').map(parseInt);
     const day = getDay(input[2]);
+    const channelID = (await ctx.getChat()).id;
+
 
     if (day === -1) return ctx.reply('Kein gültiger Tag.');
 
     let lecture = {
         time,
         day,
-        name: input[3],
-        url: input[4]
+        name: input[3].replace(/_/g, ' '),
+        url: input[4],
+        channels: [channelID]
     }
 
     lectures.push(lecture);
