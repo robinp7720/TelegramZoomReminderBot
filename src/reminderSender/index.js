@@ -15,5 +15,5 @@ export const reminderSender = async function (lecture) {
     if (lecture.password)
         message += `\nKenncode: ${lecture.password}`;
 
-    await bot.telegram.sendMessage(chatid, message);
+    await Promise.all(lecture.channels.map(channel => bot.telegram.sendMessage(channel, message)))
 }
