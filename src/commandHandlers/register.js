@@ -2,6 +2,7 @@ import {getDay} from '../utils/days';
 import {lectures} from '../lectureLoader';
 import {scheduleLecture} from '../scheduler';
 import {promises as fs} from 'fs';
+import {lecturesPath} from '../config.js';
 
 export default async ctx => {
     let input = ctx.message.text.split(' ');
@@ -29,7 +30,7 @@ export default async ctx => {
 
     scheduleLecture(lecture);
 
-    await fs.writeFile('/home/robin/TelegramZoomBot/lectures.json', JSON.stringify(lectures, null, 4));
+    await fs.writeFile(lecturesPath, JSON.stringify(lectures, null, 4));
 
     await ctx.reply('Zoom lecture registered');
 }
