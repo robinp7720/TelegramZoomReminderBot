@@ -1,10 +1,13 @@
 import NodeScheduler from 'node-schedule'
 import {reminderSender} from './reminderSender';
+import {capitalize} from './utils/text';
+import {days, getDay} from './utils/days';
+
 
 export let schedules = [];
 
 export const scheduleLecture = (lecture) => {
-    console.log('Setting up scheduler for', lecture.name);
+    console.log(`Setting up scheduler for ${lecture.name} - ${lecture.time[0]}:${lecture.time[1]} - ${capitalize(days[lecture.day])}`);
 
     let hour = parseInt(lecture.time[0]);
     let minute = parseInt(lecture.time[1]) - 5;
