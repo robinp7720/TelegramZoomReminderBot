@@ -28,7 +28,7 @@ import getID from './commandHandlers/getID';
     bot.command('register', registerCommand);
     bot.command('lectures', lectureCommand);
     bot.command('getID', getID);
-    bot.hears(/Danke*/gi, thankyouResponder)
+    bot.hears(/danke/gi, thankyouResponder)
 
     bot.on('text', zoomyResponder)
 
