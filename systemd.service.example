@@ -1,0 +1,12 @@
+[Unit]
+Description=Telegram Zoom Reminder Bot
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/TelegramZoomBot/
+ExecStart=/usr/bin/node /opt/TelegramZoomBot/dist/index.js
+Environment="TELEGRAMTOKEN="
+Environment="LECTURESPATH="
+
+[Install]
+WantedBy=multi-user.target
