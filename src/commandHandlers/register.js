@@ -11,10 +11,12 @@ export default async ctx => {
         return ctx.reply('Please use /register [time] [day of week] [name] [zoom url]');
     }
 
-    const time = input[1].split(':').map(parseInt);
+    const time = input[1].split(':').map(t => parseInt(t));
     const day = getDay(input[2]);
     const channelID = (await ctx.getChat()).id;
 
+    if (time[0] > 23 || time[0] < 0) return ctx.reply('Invalid time');
+    if (time[1] > 59 || time[1] < 0) return ctx.reply('Invalid time');
 
     if (day === -1) return ctx.reply('Kein gültiger Tag.');
 
