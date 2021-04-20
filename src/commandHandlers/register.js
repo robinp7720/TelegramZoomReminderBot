@@ -15,6 +15,8 @@ export default async ctx => {
     const day = getDay(input[2]);
     const channelID = (await ctx.getChat()).id;
 
+    if (time.length !== 2) return ctx.reply('Invalid time');
+
     if (time[0] > 23 || time[0] < 0) return ctx.reply('Invalid time');
     if (time[1] > 59 || time[1] < 0) return ctx.reply('Invalid time');
 
