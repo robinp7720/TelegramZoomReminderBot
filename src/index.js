@@ -11,6 +11,9 @@ import {reminderSender} from './reminderSender';
 import {chatid} from './config';
 import zoomyResponder from './commandHandlers/zoomyResponder';
 import getID from './commandHandlers/getID';
+import {dailyRundown} from './dailyRundown';
+import NodeScheduler from 'node-schedule';
+import rundownCommand from './commandHandlers/rundown';
 
 (async () => {
     await loadLectures();
@@ -28,12 +31,12 @@ import getID from './commandHandlers/getID';
     bot.command('register', registerCommand);
     bot.command('lectures', lectureCommand);
     bot.command('getID', getID);
+    bot.command('rundown', rundownCommand);
     bot.hears(/danke?/gi, thankyouResponder)
 
     bot.on('text', zoomyResponder)
 
     await bot.launch();
 })();
-
 
 zoomProxyServer.listen(3455);
