@@ -15,6 +15,8 @@ export default async ctx => {
     const day = getDay(input[2]);
     const channelID = (await ctx.getChat()).id;
 
+    const url = input[4].replace('#success','');
+
     if (time.length !== 2) return ctx.reply('Invalid time');
 
     if (time[0] > 23 || time[0] < 0) return ctx.reply('Invalid time');
@@ -26,7 +28,7 @@ export default async ctx => {
         time,
         day,
         name: input[3].replace(/_/g, ' '),
-        url: input[4],
+        url,
         channels: [channelID]
     }
 
