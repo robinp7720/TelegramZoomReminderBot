@@ -2,7 +2,7 @@ import {lectures} from './lectureLoader';
 import {days} from './utils/days';
 import {capitalize} from './utils/text';
 
-export function dailyRundown() {
+export function dailyRundown(channelID) {
     const width = 35;
 
     const date = new Date();
@@ -13,7 +13,8 @@ export function dailyRundown() {
     const dayPreFiller = ' '.repeat(Math.floor((width - dayString.length) / 2) - 1);
     const dayPostFiller = ' '.repeat(Math.ceil((width - dayString.length) / 2) - 1);
 
-    const lecturesToday = lectures.filter(lecture => lecture.day === day);
+    // Filter out all channels with the wrong channel id or which don't occur today
+    const lecturesToday = lectures.filter(lecture => lecture.channels.indexOf(channelID) > -1 && lecture.day === day);
 
     lecturesToday.sort((a, b) => {
         const a_time = (a.day * 60 * 24) + (a.time[0] * 60 + a.time[1]);
