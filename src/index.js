@@ -7,11 +7,9 @@ import thankyouResponder from './commandHandlers/thankyouResponder';
 import lectureCommand from './commandHandlers/lectures';
 import registerCommand from './commandHandlers/register'
 import {zoomProxyServer} from './zoomProxy';
-import {reminderSender} from './reminderSender';
-import {chatid} from './config';
 import zoomyResponder from './commandHandlers/zoomyResponder';
 import getID from './commandHandlers/getID';
-import {dailyRundown} from './dailyRundown';
+import {rundownGenerator} from './utils/rundownGenerator';
 import NodeScheduler from 'node-schedule';
 import rundownCommand from './commandHandlers/rundown';
 

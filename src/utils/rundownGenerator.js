@@ -1,17 +1,12 @@
-import {lectures} from './lectureLoader';
-import {days} from './utils/days';
-import {capitalize} from './utils/text';
+import {lectures} from '../lectureLoader';
+import {days} from './days';
+import {capitalize} from './text';
 
-export function dailyRundown(channelID) {
-    const width = 35;
+export function rundownGenerator(channelID) {
+    let width = 0;
 
     const date = new Date();
     const day = date.getDay();
-
-    const dayString = capitalize(days[day]);
-
-    const dayPreFiller = ' '.repeat(Math.floor((width - dayString.length) / 2) - 1);
-    const dayPostFiller = ' '.repeat(Math.ceil((width - dayString.length) / 2) - 1);
 
     // Filter out all channels with the wrong channel id or which don't occur today
     const lecturesToday = lectures.filter(lecture => lecture.channels.indexOf(channelID) > -1 && lecture.day === day);
@@ -26,7 +21,6 @@ export function dailyRundown(channelID) {
     //    "Hier ist eur Rundown für heute\n";
 
     let message = "";
-
     let lastTime = "";
     message += "```\n";
     message += "-".repeat(width);
