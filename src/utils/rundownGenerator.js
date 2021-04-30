@@ -3,27 +3,19 @@ import {days} from './days';
 import {capitalize} from './text';
 
 function verticalSeperator(width, type) {
-    let res;
-    if(width > 1) {
-        // For the unicode characters used see https://www.unicode.org/charts/PDF/U2500.pdf
-        res = "\u2500".repeat(width - 2);
-        switch(type) {
-            case "top":
-                res = "\u250c" + res + "\u2510";
-                break;
-            case "middle":
-                res = "\u251c" + res + "\u2524";
-                break;
-            case "bottom":
-                res = "\u2514" + res + "\u2518";
-                break;
-        }
-    } else {
-        // This should probably not happen in normal operation and is only here to prevent crashes if it does
-        res = "-".repeat(width);
-    }
+    if(width < 2) return "";
 
-    return res;
+    // For the unicode characters used see https://www.unicode.org/charts/PDF/U2500.pdf
+    const line = "\u2500".repeat(width - 2);
+
+    switch(type) {
+        case "top":
+            return "\u250c" + line + "\u2510";
+        case "middle":
+            return "\u251c" + line + "\u2524";
+        case "bottom":
+            return "\u2514" + line + "\u2518";
+    }
 }
 
 export function rundownGenerator(channelID) {
