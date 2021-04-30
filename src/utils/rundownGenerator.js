@@ -2,6 +2,30 @@ import {lectures} from '../lectureLoader';
 import {days} from './days';
 import {capitalize} from './text';
 
+function verticalSeperator(width, type) {
+    let res;
+    if(width > 1) {
+        // For the unicode characters used see https://www.unicode.org/charts/PDF/U2500.pdf
+        res = "\u2500".repeat(width - 2);
+        switch(type) {
+            case "top":
+                res = "\u250c" + res + "\u2510";
+                break;
+            case "middle":
+                res = "\u251c" + res + "\u2524";
+                break;
+            case "bottom":
+                res = "\u2514" + res + "\u2518";
+                break;
+        }
+    } else {
+        // This should probably not happen in normal operation and is only here to prevent crashes if it does
+        res = "-".repeat(width);
+    }
+
+    return res;
+}
+
 export function rundownGenerator(channelID) {
     let width = 0;
 
@@ -32,8 +56,8 @@ export function rundownGenerator(channelID) {
     const dayPostFiller = ' '.repeat(Math.ceil((width - dayString.length) / 2) - 1);
 
     message += "```\n";
-    message += "-".repeat(width);
-    message += `\n|${dayPreFiller}${dayString}${dayPostFiller}|`
+    message += verticalSeperator(width, "top");
+    message += `\n\u2502${dayPreFiller}${dayString}${dayPostFiller}\u2502`
     for (let lecture of lecturesToday) {
         const time = `${lecture.time[0]}:${lecture.time[1]}`;
         const name = lecture.name;
@@ -46,18 +70,18 @@ export function rundownGenerator(channelID) {
 
         if (lastTime !== time) {
             message += "\n"
-            message += "-".repeat(width);
-            message += `\n|${timePreFiller}${time}${timePostFiller}|`
-            message += `\n|${' '.repeat(width - 2)}|`
+            message += verticalSeperator(width, "middle");
+            message += `\n\u2502${timePreFiller}${time}${timePostFiller}\u2502`
+            message += `\n\u2502${' '.repeat(width - 2)}\u2502`
         }
 
-        message += `\n|${namePreFiller}${name}${namePostFiller}|`
+        message += `\n\u2502${namePreFiller}${name}${namePostFiller}\u2502`
 
         lastTime = time;
     }
 
     message += "\n"
-    message += "-".repeat(width);
+    message += verticalSeperator(width, "bottom");
 
     message += "```";
     return message
