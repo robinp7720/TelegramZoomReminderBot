@@ -2,7 +2,7 @@ import {lectures} from '../lectureLoader';
 import {days} from './days';
 import {capitalize} from './text';
 
-function verticalSeperator(width, type) {
+function horizontalSeperator(width, type) {
     if(width < 2) return "";
 
     // For the unicode characters used see https://www.unicode.org/charts/PDF/U2500.pdf
@@ -48,7 +48,7 @@ export function rundownGenerator(channelID) {
     const dayPostFiller = ' '.repeat(Math.ceil((width - dayString.length) / 2) - 1);
 
     message += "```\n";
-    message += verticalSeperator(width, "top");
+    message += horizontalSeperator(width, "top");
     message += `\n\u2502${dayPreFiller}${dayString}${dayPostFiller}\u2502`
     for (let lecture of lecturesToday) {
         const time = `${lecture.time[0]}:${lecture.time[1]}`;
@@ -62,7 +62,7 @@ export function rundownGenerator(channelID) {
 
         if (lastTime !== time) {
             message += "\n"
-            message += verticalSeperator(width, "middle");
+            message += horizontalSeperator(width, "middle");
             message += `\n\u2502${timePreFiller}${time}${timePostFiller}\u2502`
             message += `\n\u2502${' '.repeat(width - 2)}\u2502`
         }
@@ -73,7 +73,7 @@ export function rundownGenerator(channelID) {
     }
 
     message += "\n"
-    message += verticalSeperator(width, "bottom");
+    message += horizontalSeperator(width, "bottom");
 
     message += "```";
     return message
