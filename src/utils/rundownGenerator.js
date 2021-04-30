@@ -23,9 +23,6 @@ export function rundownGenerator(channelID) {
         }
     }
 
-    //let message = "Guten Morgen liebe Faulpelze\n" +
-    //    "Hier ist eur Rundown für heute\n";
-
     let message = "";
     let lastTime = "";
 
