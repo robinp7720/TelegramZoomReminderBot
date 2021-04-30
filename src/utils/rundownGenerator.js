@@ -17,11 +17,23 @@ export function rundownGenerator(channelID) {
         return a_time - b_time;
     });
 
+    for (let lecture of lecturesToday) {
+        if (lecture.name.length + 4 > width) {
+            width = lecture.name.length + 4;
+        }
+    }
+
     //let message = "Guten Morgen liebe Faulpelze\n" +
     //    "Hier ist eur Rundown für heute\n";
 
     let message = "";
     let lastTime = "";
+
+    const dayString = capitalize(days[day]);
+
+    const dayPreFiller = ' '.repeat(Math.floor((width - dayString.length) / 2) - 1);
+    const dayPostFiller = ' '.repeat(Math.ceil((width - dayString.length) / 2) - 1);
+
     message += "```\n";
     message += "-".repeat(width);
     message += `\n|${dayPreFiller}${dayString}${dayPostFiller}|`
