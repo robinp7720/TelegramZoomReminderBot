@@ -34,8 +34,8 @@ export function rundownGenerator(channelID) {
     });
 
     for (let lecture of lecturesToday) {
-        if (lecture.name.length + 4 > width) {
-            width = lecture.name.length + 4;
+        if (lecture.name.length + 10 > width) {
+            width = lecture.name.length + 10;
         }
     }
 

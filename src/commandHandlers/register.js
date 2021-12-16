@@ -7,13 +7,16 @@ import {lecturesPath} from '../config.js';
 export default async ctx => {
     let input = ctx.message.text.split(' ');
 
-    if (input.length !== 5) {
-        return ctx.reply('Please use /register [time] [day of week] [name] [zoom url]');
+    console.log(input, input.length)
+
+    if (input.length !== 5 && input.length !== 6) {
+        return ctx.reply('Please use /register [time] [day of week] [name] [in_person|zoom url] [location]');
     }
 
     const time = input[1].split(':').map(t => parseInt(t));
     const day = getDay(input[2]);
     const channelID = (await ctx.getChat()).id;
+    const location = input[5] || ''
 
     const url = input[4].replace('#success','');
 
@@ -29,7 +32,8 @@ export default async ctx => {
         day,
         name: input[3].replace(/_/g, ' '),
         url,
-        channels: [channelID]
+        channels: [channelID],
+        location
     }
 
     lectures.push(lecture);

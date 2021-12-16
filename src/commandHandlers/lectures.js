@@ -32,7 +32,12 @@ export default async ctx => {
     });
 
     for (const lecture of filteredLectures) {
-        message += `${lecture.name} - ${lecture.time[0]}:${lecture.time[1]} - ${capitalize(days[lecture.day])}\n`
+        if (lecture.url === 'in_person') {
+            message += `${lectures.indexOf(lecture)} | ${lecture.name} - ${lecture.time[0]}:${lecture.time[1]} ${capitalize(days[lecture.day])} - In Person\n`
+            continue;
+        }
+
+        message += `${lectures.indexOf(lecture)} | ${lecture.name} - ${lecture.time[0]}:${lecture.time[1]} ${capitalize(days[lecture.day])}\n`
     }
 
     try {
